@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import Calendar from "./components/Calendar";
+import ToDoApp from "./components/ToDoApp";
 import './App.css';
 
 class App extends React.Component {
@@ -15,8 +16,11 @@ class App extends React.Component {
           </div>
         </header>
         <main>
-          <Calendar />
+          <Calendar /> 
         </main>
+        <div>
+          <ToDoApp />
+        </div>
       </div>
     );
   }
