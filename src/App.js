@@ -1,10 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import Calendar from "./components/Calendar";
-import ToDoApp from "./components/ToDoApp";
 import './App.css';
+import ToDoApp from './components/ToDoApp.js'
 
 class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      showToDo: false
+    }
+    this.toggleToDo = this.toggleToDo.bind(this)
+  }
+  toggleToDo() {
+    this.setState({ showToDo: !this.state.showToDo })
+  }
   render() {
     return (
       <div className="App">
@@ -16,10 +25,10 @@ class App extends React.Component {
           </div>
         </header>
         <main>
-          <Calendar /> 
+          <Calendar toggleToDo={this.toggleToDo}/> 
         </main>
         <div>
-          <ToDoApp />
+          <ToDoApp show={this.state.showToDo}/>
         </div>
       </div>
     );
