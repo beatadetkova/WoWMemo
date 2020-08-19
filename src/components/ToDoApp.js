@@ -18,7 +18,9 @@ class ToDoApp extends React.Component{
   }
 
   componentDidMount(){
-    this.todoInput.focus();
+    if (this.props.show) {
+      this.todoInput.focus();
+    }
   }
 
   componentDidUpdate(){
@@ -77,7 +79,7 @@ class ToDoApp extends React.Component{
   }
 
   render(){
-    return(
+    return this.props.show ? (
       <div className="todo-list">
         <h1>ToDo</h1>
 
@@ -92,7 +94,7 @@ class ToDoApp extends React.Component{
           <button onClick={this.addTodo}>Add</button>
         </div>
       </div>
-    )
+    ) : (<div></div>)
   }  
 }
 
