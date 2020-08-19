@@ -2,7 +2,7 @@ import React from "react";
 import addMonths from 'date-fns/addMonths';
 import subMonths from 'date-fns/subMonths';
 import addDays from 'date-fns/addDays';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import startOfWeek from 'date-fns/startOfWeek';
 import endOfMonth from 'date-fns/endOfMonth';
 import startOfMonth from 'date-fns/startOfMonth';
@@ -11,12 +11,15 @@ import isSameMonth from 'date-fns/isSameMonth';
 import isSameDay from 'date-fns/isSameDay';
 
 class Calendar extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
     this.state = {
       currentMonth: new Date(),
-      selectedDate: new Date()
+      selectedDate: new Date(),
+      isToggleOn: true,
+      showToDo: false,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   renderHeader() {
@@ -56,6 +59,15 @@ class Calendar extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
+  handleClick(e) {
+    this.setState({
+      isToggleOn: !this.state.isToggleOn,
+      showToDo: !this.state.showToDo,
+      selectedDate: e
+    });
+    this.props.toggleToDo()
+  }
+
   renderCells() {
     const { currentMonth, selectedDate } = this.state;
     const monthStart = startOfMonth(currentMonth);
@@ -73,7 +85,7 @@ class Calendar extends React.Component {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
-        const cloneDay = day;
+        // const cloneDay = day;
         days.push(
           <div
             className={`col cell ${
@@ -82,12 +94,13 @@ class Calendar extends React.Component {
                 : isSameDay(day, selectedDate) ? "selected" : ""
             }`}
             key={day}
-            onClick={() => this.onDateClick(parse(cloneDay))}
+            onClick={this.handleClick}
+            
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
           </div>
-        );
+        ); 
         day = addDays(day, 1);
       }
       rows.push(
@@ -100,11 +113,11 @@ class Calendar extends React.Component {
     return <div className="body">{rows}</div>;
   }
 
-  onDateClick = day => {
-    this.setState({
-      selectedDate: day
-    });
-  };
+  // onDateClick = day => {
+  //   this.setState({
+  //     selectedDate: day
+  //   });
+  // };
 
   nextMonth = () => {
     this.setState({
