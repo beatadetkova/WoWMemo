@@ -1,19 +1,21 @@
 import React from 'react';
 import './dist/ToDoApp.css'
 
+const defaultInput = ''
+const defaultDate = toIsoDate()
+
 class ToDoApp extends React.Component{
 
   constructor(props){
     super(props);
     this.state = JSON.parse(localStorage.getItem('todoapp')) || {
-      input: '',
-      todos: [{
-        value: 'This is a sample TODO!',
-        id: this.guid()
-      }]
+      input: defaultInput,
+      date: defaultDate,
+      todos: []
     };
     this.addTodo = this.addTodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleDate = this.handleDate.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
   }
 
@@ -23,9 +25,9 @@ class ToDoApp extends React.Component{
     }
   }
 
-  componentDidUpdate(){
-    localStorage.setItem('todoapp', JSON.stringify(this.state));
-  }
+  // componentDidUpdate(){
+  //   localStorage.setItem('todoapp', JSON.stringify(this.state));
+  // }
 
   addTodo(){
     if (this.state.input.length===0) {
@@ -33,12 +35,14 @@ class ToDoApp extends React.Component{
     }
     const newTodo = {
       value: this.state.input,
+      date: this.state.date,
       id: this.guid()
     };
 
     this.setState(state => ({
       todos: [ ...state.todos, newTodo],
-      input: ''
+      input: defaultInput,
+      date: defaultDate
     }));
   }
 
@@ -48,6 +52,16 @@ class ToDoApp extends React.Component{
     }else{
       this.setState({
         input: evt.target.value
+      });
+    }
+  }
+
+  handleDate(evt) {
+    if(evt.nativeEvent.key === "Enter"){
+      this.addTodo();
+    }else{
+      this.setState({
+        date: evt.target.value
       });
     }
   }
@@ -89,8 +103,13 @@ class ToDoApp extends React.Component{
           <input type="text" 
             value={this.state.input} 
             onChange={this.handleInput} 
-            onKeyDown={this.handleInput}  
+            onKeyUp={this.handleInput}  
             ref={(input) => { this.todoInput = input; }} />
+          <input type="date" 
+            value={this.state.date} 
+            onChange={this.handleDate}
+            max={toIsoDate(Date.now() + 365*24*60*60*1000)}
+            />
           <button onClick={this.addTodo}>Add</button>
         </div>
       </div>
@@ -98,11 +117,14 @@ class ToDoApp extends React.Component{
   }  
 }
 
-const Todo = ({value, onClick, deleted}) => (
+function toIsoDate(timestamp = Date.now()) {
+  return new Date(timestamp).toISOString().split('T')[0]
+}
+
+const Todo = ({value, date, onClick, deleted}) => (
   <div className={`todo ${deleted? 'deleted' : ''}`} >
     <button className="remove" onClick={onClick}>×</button>
-    <div>{value}</div>
-
+    <div>{new Date(date).toLocaleDateString()} - {value}</div>
   </div>
 );
 
