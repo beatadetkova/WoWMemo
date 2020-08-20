@@ -35,7 +35,7 @@ button {
 }
 
 .todo-list {
-  max-width: 400px;
+  max-width: 500px;
   margin: 3em auto 0;
   background: linear-gradient(to right, #f7f7f7 54%, #e8f4fc 100%);
   padding: 1em;
