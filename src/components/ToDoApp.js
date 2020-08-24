@@ -93,9 +93,8 @@ class ToDoApp extends React.Component{
   }
 
   render(){
-    return this.props.show ? (
+    return (
       <div className="todo-list">
-        <h1>ToDo</h1>
 
         { this.state.todos.map(t => <Todo key={t.id} {...t} onClick={()=>this.removeTodo(t.id)}/>)}
 
@@ -113,7 +112,7 @@ class ToDoApp extends React.Component{
           <button onClick={this.addTodo}>Add</button>
         </div>
       </div>
-    ) : (<div></div>)
+    )
   }  
 }
 
