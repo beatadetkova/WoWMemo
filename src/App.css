@@ -99,3 +99,13 @@ main {
   margin-top: 2em;
   max-width: 50em;
 }
+
+a {
+  color:green;
+  font-family: Friz Quadrata Regular OS;
+}
+
+a:visited {
+  color:red;
+  font-family: Friz Quadrata Regular OS;
+}
