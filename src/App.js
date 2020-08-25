@@ -1,32 +1,31 @@
-import React from 'react';
-// import Calendar from "./components/Calendar";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from './PrivateRoute';
+import Home from "./components/Home/Home.js";
+import { AuthContext } from "./context/Auth.js";
+import Login from "./components/Login/Login.js";
+import Signup from './components/SignUp/SignUp.js';
 import './App.css';
-import ToDoApp from './components/ToDoApp.js'
 
-class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      // showToDo: false
-    }
-    // this.toggleToDo = this.toggleToDo.bind(this)
+function App(props) {
+  const [authTokens, setAuthTokens] = useState();
+
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
   }
-  // toggleToDo() {
-  //   this.setState({ showToDo: !this.state.showToDo })
-  // }
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          WoWMemo
-        </header>
-        <main>
-          <ToDoApp />
-          {/* <Calendar toggleToDo={this.toggleToDo}/>  */}
-        </main>
-      </div>
-    );
-  }
+
+  return (
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+      <Router>
+        <div>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <PrivateRoute exact path="/" component={Home} />
+        </div>
+      </Router>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
