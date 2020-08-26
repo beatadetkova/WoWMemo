@@ -6,7 +6,7 @@ import { useAuth } from "../../context/Auth.js";
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
   const referer = props.location.state ? props.location.state.referer : '/';
@@ -18,11 +18,11 @@ function Login(props) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: userName,
+        email: email,
         password: password
       })
     }
-    fetch('https://www.somePlace.com/auth/login', init) 
+    fetch('http://localhost:4000/signin', init) 
     .then(result => {
       if (result.status === 200) {
         setAuthTokens(result.data);
@@ -36,7 +36,6 @@ function Login(props) {
   }
 
   if (isLoggedIn) {
-    console.log('Hey!')
     return <Redirect to={referer} />;
   }
 
@@ -46,10 +45,10 @@ function Login(props) {
       </Welcome>
       <Form>
         <Input
-          type="username"
-          value={userName}
+          type="email"
+          value={email}
           onChange={e => {
-            setUserName(e.target.value);
+            setEmail(e.target.value);
           }}
           placeholder="email"
         />
@@ -64,7 +63,7 @@ function Login(props) {
         <Button onClick={postLogin}>Sign In</Button>
       </Form>
       <Link to="/signup">Don't have an account?</Link>
-        { isError &&<Error>The username or password provided were incorrect!</Error> }
+        { isError &&<Error>The email or password provided were incorrect!</Error> }
     </Card>
   );
 }
