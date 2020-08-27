@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Card, Form, Input, Button, Welcome, Error } from "../AuthForms/AuthForms.js";
+import { Card, Form, Input, Button, Welcome } from "../AuthForms/AuthForms.js";
 
 function Signup() {
   return (
