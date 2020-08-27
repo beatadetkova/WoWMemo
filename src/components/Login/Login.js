@@ -38,6 +38,13 @@ function Login(props) {
   if (isLoggedIn) {
     return <Redirect to={referer} />;
   }
+  
+  const handleKeyDown = e => {
+    if (e.keyCode === 13) {
+      console.log('hey!')
+      postLogin();
+    }
+  };
 
   return (
     <Card>
@@ -59,6 +66,7 @@ function Login(props) {
             setPassword(e.target.value);
           }}
           placeholder="password"
+          onKeyDown={handleKeyDown}
         />
         <Button onClick={postLogin}>Sign In</Button>
       </Form>
