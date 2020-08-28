@@ -10,7 +10,7 @@
     border-color: black;
   }
 }
-.todo {
+.task {
   display: flex;
   background: linear-gradient(to right, #b8b8b8, #f8eadd);
   padding: 0.5em;
@@ -25,10 +25,10 @@
   overflow: hidden;
   transition: all 300ms ease;
 }
-.todo button {
+.task button {
   margin-right: 1em;
 }
-.todo.deleted {
+.task.deleted {
   max-height: 0px;
   padding: 0;
   margin-bottom: 0;
@@ -48,24 +48,24 @@ button {
   font-weight: bold;
 }
 
-.todo-list {
+.task-list {
   max-width: 500px;
   margin: 3em auto 0;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 1em;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
-.todo-list h1 {
+.task-list h1 {
   margin-top: 0;
   color: #212121;
   font-family: Friz Quadrata Regular OS;
   text-align: center;
 }
-.todo-list .controls {
+.task-list .controls {
   display: flex;
   margin-top: 1em;
 }
-.todo-list .controls input {
+.task-list .controls input {
   flex: 1;
   padding: 0.5em;
   margin-right: 10px;
@@ -75,7 +75,7 @@ button {
   border: 2px inset var(--main-color);
   outline: none;
 }
-.todo-list .controls button {
+.task-list .controls button {
   background: linear-gradient(to right, #e65c00, #F9D423);
   color: black;
   padding: 0.4em;
@@ -83,7 +83,7 @@ button {
   font-family: Friz Quadrata Regular OS;
   border: 2px inset var(--main-color);
 }
-.todo-list .controls button:hover {
+.task-list .controls button:hover {
   cursor: pointer;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   animation: mymove 3s infinite;

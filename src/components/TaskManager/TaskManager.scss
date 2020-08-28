@@ -15,7 +15,7 @@ $dark-orange: #e65c00;
 $orange-yellow: #F9D423;
 $black: rgba(0,0,0,0.3);
 
-.todo{
+.task{
   display:flex;
   background: linear-gradient(to right,  rgb(184, 184, 184), #f8eadd );
   padding:0.5em;
@@ -55,7 +55,7 @@ button{
   font-weight: bold;
 }
 
-.todo-list{
+.task-list{
 
   max-width:500px;
   margin:3em auto 0;
