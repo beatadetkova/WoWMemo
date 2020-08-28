@@ -1,27 +1,27 @@
 import React from 'react';
-import './dist/ToDoApp.css'
+import './dist/TaskManager.css'
 
 const defaultInput = ''
 const defaultDate = toIsoDate()
 
-class ToDoApp extends React.Component{
+class TaskManager extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = JSON.parse(localStorage.getItem('todoapp')) || {
+    this.state = JSON.parse(localStorage.getItem('taskapp')) || {
       input: defaultInput,
       date: defaultDate,
-      todos: []
+      tasks: []
     };
-    this.addTodo = this.addTodo.bind(this);
+    this.addTask = this.addTask.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleDate = this.handleDate.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   componentDidMount(){
     if (this.props.show) {
-      this.todoInput.focus();
+      this.taskInput.focus();
     }
   }
 
@@ -29,18 +29,18 @@ class ToDoApp extends React.Component{
   //   localStorage.setItem('todoapp', JSON.stringify(this.state));
   // }
 
-  addTodo(){
+  addTask(){
     if (this.state.input.length===0) {
       return
     }
-    const newTodo = {
+    const newTask = {
       value: this.state.input,
       date: this.state.date,
       id: this.guid()
     };
 
     this.setState(state => ({
-      todos: [ ...state.todos, newTodo],
+      tasks: [ ...state.tasks, newTask],
       input: defaultInput,
       date: defaultDate
     }));
@@ -48,7 +48,7 @@ class ToDoApp extends React.Component{
 
   handleInput(evt){
     if(evt.nativeEvent.key === "Enter"){
-      this.addTodo();
+      this.addTask();
     }else{
       this.setState({
         input: evt.target.value
@@ -58,7 +58,7 @@ class ToDoApp extends React.Component{
 
   handleDate(evt) {
     if(evt.nativeEvent.key === "Enter"){
-      this.addTodo();
+      this.addTask();
     }else{
       this.setState({
         date: evt.target.value
@@ -66,15 +66,15 @@ class ToDoApp extends React.Component{
     }
   }
 
-  removeTodo(id){
+  removeTask(id){
 
     this.setState(state => {
       return{
-        todos: state.todos.map(todo => {
-          if(todo.id !== id){
-            return todo;
+        tasks: state.tasks.map(task => {
+          if(task.id !== id){
+            return task;
           } else {
-            return { ...todo, deleted: true }
+            return { ...task, deleted: true }
           }
         })
       };
@@ -83,7 +83,7 @@ class ToDoApp extends React.Component{
     setTimeout(() => {
       this.setState(state => {
         return{
-          todos: state.todos.filter(t => t.id !== id)
+          tasks: state.tasks.filter(t => t.id !== id)
         }});
     }, 1000);
   }
@@ -94,22 +94,22 @@ class ToDoApp extends React.Component{
 
   render(){
     return (
-      <div className="todo-list">
+      <div className="task-list">
 
-        { this.state.todos.map(t => <Todo key={t.id} {...t} onClick={()=>this.removeTodo(t.id)}/>)}
+        { this.state.tasks.map(t => <Task key={t.id} {...t} onClick={()=>this.removeTask(t.id)}/>)}
 
         <div className="controls">
           <input type="text" 
             value={this.state.input} 
             onChange={this.handleInput} 
             onKeyUp={this.handleInput}  
-            ref={(input) => { this.todoInput = input; }} />
+            ref={(input) => { this.taskInput = input; }} />
           <input type="date" 
             value={this.state.date} 
             onChange={this.handleDate}
             max={toIsoDate(Date.now() + 365*24*60*60*1000)}
             />
-          <button onClick={this.addTodo}>Add</button>
+          <button onClick={this.addTask}>Add</button>
         </div>
       </div>
     )
@@ -120,13 +120,11 @@ function toIsoDate(timestamp = Date.now()) {
   return new Date(timestamp).toISOString().split('T')[0]
 }
 
-const Todo = ({value, date, onClick, deleted}) => (
-  <div className={`todo ${deleted? 'deleted' : ''}`} >
+const Task = ({value, date, onClick, deleted}) => (
+  <div className={`task ${deleted? 'deleted' : ''}`} >
     <button className="remove" onClick={onClick}>×</button>
     <div>{new Date(date).toLocaleDateString()} - {value}</div>
   </div>
 );
 
-export default ToDoApp;
-
-//ToDo
+export default TaskManager;

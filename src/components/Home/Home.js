@@ -1,5 +1,5 @@
 import React from "react";
-import ToDoApp from "../ToDo/ToDoApp.js"
+import TaskManager from "../TaskManager/TaskManager.js"
 
 function Home(props) {
   return   <div className="App">
@@ -7,7 +7,7 @@ function Home(props) {
       WoWMemo
       </header>
       <main>
-        <ToDoApp />
+        <TaskManager />
       </main>
     </div>
 }
