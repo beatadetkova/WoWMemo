@@ -23,9 +23,10 @@ function Login(props) {
       })
     }
     fetch('http://localhost:4000/signin', init) 
-    .then(result => {
-      if (result.status === 200) {
-        setAuthTokens(result.data);
+    .then(async res => {
+      if (res.status === 200) {
+        const tokens = await res.json().then(JSON.parse)
+        setAuthTokens(tokens);
         setLoggedIn(true);
       } else {
         setIsError(true);
@@ -41,7 +42,6 @@ function Login(props) {
   
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
-      console.log('hey!')
       postLogin();
     }
   };
