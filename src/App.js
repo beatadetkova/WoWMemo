@@ -10,9 +10,9 @@ import './App.css';
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
 
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
+  const setTokens = (tokens) => {
+    localStorage.setItem("jwt", tokens.jwt);
+    setAuthTokens(tokens);
   }
 
   return (
