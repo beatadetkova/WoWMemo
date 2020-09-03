@@ -1,0 +1,50 @@
+/* FONT IMPORTS */
+@font-face {
+  font-family: "Friz Quadrata Regular OS";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Friz Quadrata Regular OS"), url("friz-quadrata-regular-os-5870333951e7c.woff") format("woff");
+}
+@font-face {
+  font-family: "Friz Quadrata Bold Italic OS";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Friz Quadrata Bold Italic OS"), url("friz-quadrata-bold-italic-os-5870341205e0f.woff") format("woff");
+}
+.hidden {
+  display: none;
+}
+
+/* VARIABLES */
+:root {
+  --main-color: #e65c00;
+  --text-color: #777;
+  --text-color-light: #ccc;
+  --border-color: #eee;
+  --bg-color: #f9f9f9;
+  --neutral-color: #fff;
+}
+
+/* GENERAL */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-color);
+  position: relative;
+}
+
+a {
+  color: green;
+  font-family: Friz Quadrata Regular OS;
+}
+
+a:visited {
+  color: red;
+  font-family: Friz Quadrata Regular OS;
+}
