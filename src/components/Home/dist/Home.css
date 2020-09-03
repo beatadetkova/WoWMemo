@@ -1,0 +1,45 @@
+header {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  max-width: 500px;
+  margin: 1.5em auto 0;
+  padding: 1em;
+  background: linear-gradient(to right, #e65c00, #F9D423);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  font-family: Friz Quadrata Regular OS;
+}
+
+main {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2em;
+  max-width: 50em;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1em;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+main label {
+  background: linear-gradient(to right, #e65c00, #F9D423);
+  background-clip: text;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: Friz Quadrata Regular OS;
+}
+main label.recurring {
+  margin: 1.5em auto 0;
+}
+main div.recurring {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
