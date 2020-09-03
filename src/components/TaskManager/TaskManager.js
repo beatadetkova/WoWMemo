@@ -97,7 +97,33 @@ class TaskManager extends React.Component{
       <div className="task-list">
 
         { this.state.tasks.map(t => <Task key={t.id} {...t} onClick={()=>this.removeTask(t.id)}/>)}
+        { renderControls.bind(this)(this.props.type) }
+        
+      </div>
+    )
+  }  
+}
 
+function toIsoDate(timestamp = Date.now()) {
+  return new Date(timestamp).toISOString().split('T')[0]
+}
+
+function renderControls(type) {
+  switch(type) {
+    case 'daily':
+    case 'weekly':
+      return (
+        <div className="controls">
+          <input type="text" 
+            value={this.state.input} 
+            onChange={this.handleInput} 
+            onKeyUp={this.handleInput}  
+            ref={(input) => { this.taskInput = input; }} />
+          <button onClick={this.addTask}>Add</button>
+        </div>
+      )
+    default:
+      return (
         <div className="controls">
           <input type="text" 
             value={this.state.input} 
@@ -111,13 +137,8 @@ class TaskManager extends React.Component{
             />
           <button onClick={this.addTask}>Add</button>
         </div>
-      </div>
-    )
-  }  
-}
-
-function toIsoDate(timestamp = Date.now()) {
-  return new Date(timestamp).toISOString().split('T')[0]
+      )
+  }
 }
 
 const Task = ({value, date, onClick, deleted}) => (
