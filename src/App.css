@@ -100,6 +100,12 @@ main {
   max-width: 50em;
 }
 
+main div.recurring {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
 a {
   color:green;
   font-family: Friz Quadrata Regular OS;
