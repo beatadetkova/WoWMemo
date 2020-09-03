@@ -5,7 +5,7 @@ import Home from "./components/Home/Home.js";
 import { AuthContext } from "./context/Auth.js";
 import Login from "./components/Login/Login.js";
 import Signup from './components/SignUp/SignUp.js';
-import './App.css';
+import './dist/App.css';
 
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
