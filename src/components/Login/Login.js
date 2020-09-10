@@ -22,7 +22,7 @@ function Login(props) {
         password: password
       })
     }
-    fetch('http://localhost:4000/signin', init) 
+    fetch('http://localhost:4000/auth/signin', init) 
     .then(async res => {
       if (res.status === 200) {
         const tokens = await res.json().then(JSON.parse)
@@ -32,10 +32,12 @@ function Login(props) {
         setIsError(true);
       }
     }).catch(e => {
+      // TODO: this should display more relevant message like "Ups, something happend, please try again!"
       setIsError(true);
     });
   }
 
+// TODO: align logic between PrivateRoute and this component
   if (isLoggedIn) {
     return <Redirect to={referer} />;
   }
