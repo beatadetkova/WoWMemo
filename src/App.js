@@ -11,8 +11,14 @@ function App(props) {
   const [authTokens, setAuthTokens] = useState();
 
   const setTokens = (tokens) => {
-    localStorage.setItem("jwt", tokens.jwt);
+    localStorage.setItem("tokens", JSON.stringify(tokens));
     setAuthTokens(tokens);
+  }
+
+  const tokens = JSON.parse(localStorage.getItem("tokens"))
+  
+  if (!authTokens && tokens) {
+    setAuthTokens(tokens)
   }
 
   return (
