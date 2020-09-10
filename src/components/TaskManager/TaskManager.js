@@ -117,7 +117,8 @@ function renderControls(type) {
           <input type="text" 
             value={this.state.input} 
             onChange={this.handleInput} 
-            onKeyUp={this.handleInput}  
+            onKeyUp={this.handleInput}
+            placeholder="your task here"  
             ref={(input) => { this.taskInput = input; }} />
           <button onClick={this.addTask}>Add</button>
         </div>
@@ -128,7 +129,8 @@ function renderControls(type) {
           <input type="text" 
             value={this.state.input} 
             onChange={this.handleInput} 
-            onKeyUp={this.handleInput}  
+            onKeyUp={this.handleInput} 
+            placeholder="your task here"   
             ref={(input) => { this.taskInput = input; }} />
           <input type="date" 
             value={this.state.date} 
