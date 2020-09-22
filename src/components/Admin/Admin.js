@@ -1,6 +1,6 @@
-import React from "react";
-import { Button } from "../AuthForms/AuthForms.js";
-import { useAuth } from "../../context/Auth.js";
+import React from 'react';
+import { Button } from '../AuthForms/AuthForms.js';
+import { useAuth } from '../../context/Auth.js';
 
 function Admin(props) {
   const { setAuthTokens } = useAuth();

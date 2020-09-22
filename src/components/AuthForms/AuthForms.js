@@ -16,9 +16,9 @@ const Welcome = styled.div`
   text-align: center;
   font-weight: bold;
   font-size: 40px;
-  max-width:500px;
-  padding:1em;
-  background: linear-gradient(to right, #e65c00, #F9D423);
+  max-width: 500px;
+  padding: 1em;
+  background: linear-gradient(to right, #e65c00, #f9d423);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -40,7 +40,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to right, #e65c00, #F9D423);
+  background: linear-gradient(to right, #e65c00, #f9d423);
   border-color: 2px inset #e65c00;
   border-radius: 3px;
   padding: 1rem;
@@ -51,7 +51,6 @@ const Button = styled.button`
   font-size: 0.8rem;
   font-family: Friz Quadrata Regular OS;
 `;
-
 
 const Error = styled.div`
   color: red;
