@@ -3,10 +3,26 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './dist/index.css';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import { addTask } from './redux/reducers';
+
+const logger = createLogger();
+
+const rootReducer = combineReducers({ addTask }); // add any other reducers
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware, logger)
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
