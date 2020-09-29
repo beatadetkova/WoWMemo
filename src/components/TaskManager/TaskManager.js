@@ -1,165 +1,142 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './dist/TaskManager.css';
 
-const defaultInput = '';
-const defaultDate = toIsoDate();
-
-class TaskManager extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = JSON.parse(localStorage.getItem('taskapp')) || {
-      input: defaultInput,
-      date: defaultDate,
-      tasks: [],
-    };
-    this.addTask = this.addTask.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleDate = this.handleDate.bind(this);
-    this.removeTask = this.removeTask.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.props.show) {
-      this.taskInput.focus();
-    }
-  }
-
-  // componentDidUpdate(){
-  //   localStorage.setItem('todoapp', JSON.stringify(this.state));
-  // }
-
-  addTask() {
-    if (this.state.input.length === 0) {
-      return;
-    }
-    const newTask = {
-      value: this.state.input,
-      date: this.state.date,
-      id: this.guid(),
-    };
-
-    this.setState((state) => ({
-      tasks: [...state.tasks, newTask],
-      input: defaultInput,
-      date: defaultDate,
-    }));
-  }
-
-  handleInput(evt) {
-    if (evt.nativeEvent.key === 'Enter') {
-      this.addTask();
-    } else {
-      this.setState({
-        input: evt.target.value,
-      });
-    }
-  }
-
-  handleDate(evt) {
-    if (evt.nativeEvent.key === 'Enter') {
-      this.addTask();
-    } else {
-      this.setState({
-        date: evt.target.value,
-      });
-    }
-  }
-
-  removeTask(id) {
-    this.setState((state) => {
-      return {
-        tasks: state.tasks.map((task) => {
-          if (task.id !== id) {
-            return task;
-          } else {
-            return { ...task, deleted: true };
-          }
-        }),
-      };
-    });
-
-    setTimeout(() => {
-      this.setState((state) => {
-        return {
-          tasks: state.tasks.filter((t) => t.id !== id),
-        };
-      });
-    }, 1000);
-  }
-
-  guid() {
-    return new Date();
-  }
-
-  render() {
-    return (
-      <div className="task-list">
-        {this.state.tasks.map((t) => (
-          <Task key={t.id} {...t} onClick={() => this.removeTask(t.id)} />
-        ))}
-        {renderControls.bind(this)(this.props.type)}
-      </div>
-    );
-  }
+function guid() {
+  return new Date();
 }
 
 function toIsoDate(timestamp = Date.now()) {
   return new Date(timestamp).toISOString().split('T')[0];
 }
 
-function renderControls(type) {
-  switch (type) {
-    case 'daily':
-    case 'weekly':
-      return (
-        <div className="controls">
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.handleInput}
-            onKeyUp={this.handleInput}
-            placeholder="your task here"
-            ref={(input) => {
-              this.taskInput = input;
-            }}
-          />
-          <button onClick={this.addTask}>Add</button>
-        </div>
-      );
-    default:
-      return (
-        <div className="controls">
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.handleInput}
-            onKeyUp={this.handleInput}
-            placeholder="your task here"
-            ref={(input) => {
-              this.taskInput = input;
-            }}
-          />
-          <input
-            type="date"
-            value={this.state.date}
-            onChange={this.handleDate}
-            max={toIsoDate(Date.now() + 365 * 24 * 60 * 60 * 1000)}
-          />
-          <button onClick={this.addTask}>Add</button>
-        </div>
-      );
-  }
-}
+function TaskManager(props) {
+  const defaultInput = '';
+  const defaultDate = toIsoDate();
 
-const Task = ({ value, date, onClick, deleted }) => (
-  <div className={`task ${deleted ? 'deleted' : ''}`}>
-    <button className="remove" onClick={onClick}>
-      ×
-    </button>
-    <div>
-      {new Date(date).toLocaleDateString()} - {value}
+  const [input, setInput] = useState(defaultInput);
+  const [date, setDate] = useState(defaultDate);
+  const [tasks, setTasks] = useState([]);
+
+  let taskInput;
+
+  useEffect(() => {
+    taskInput.focus();
+  }, [taskInput]);
+
+  // componentDidUpdate(){
+  //   localStorage.setItem('todoapp', JSON.stringify(this.state));
+  // }
+
+  function addTask() {
+    if (input.length === 0) {
+      return;
+    }
+    const newTask = {
+      value: input,
+      date: date,
+      id: guid(),
+    };
+
+    setTasks([...tasks, newTask]);
+    setInput(defaultInput);
+    setDate(defaultDate);
+  }
+
+  function removeTask(id) {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id !== id) {
+          return task;
+        } else {
+          return { ...task, deleted: true };
+        }
+      })
+    );
+
+    setTimeout(() => {
+      setTasks(tasks.filter((t) => t.id !== id));
+    }, 1000);
+  }
+
+  function handleInput(evt) {
+    if (evt.nativeEvent.key === 'Enter') {
+      addTask();
+    } else {
+      setInput(evt.target.value);
+    }
+  }
+
+  function handleDate(evt) {
+    if (evt.nativeEvent.key === 'Enter') {
+      addTask();
+    } else {
+      setDate(evt.target.value);
+    }
+  }
+
+  function renderControls(type) {
+    switch (type) {
+      case 'daily':
+      case 'weekly':
+        return (
+          <div className="controls">
+            <input
+              type="text"
+              value={input}
+              onChange={handleInput}
+              onKeyUp={handleInput}
+              placeholder="your task here"
+              ref={(input) => {
+                taskInput = input;
+              }}
+            />
+            <button onClick={addTask}>Add</button>
+          </div>
+        );
+      default:
+        return (
+          <div className="controls">
+            <input
+              type="text"
+              value={input}
+              onChange={handleInput}
+              onKeyUp={handleInput}
+              placeholder="your task here"
+              ref={(input) => {
+                taskInput = input;
+              }}
+            />
+            <input
+              type="date"
+              value={date}
+              onChange={handleDate}
+              max={toIsoDate(Date.now() + 365 * 24 * 60 * 60 * 1000)}
+            />
+            <button onClick={addTask}>Add</button>
+          </div>
+        );
+    }
+  }
+
+  const Task = ({ value, date, onClick, deleted }) => (
+    <div className={`task ${deleted ? 'deleted' : ''}`}>
+      <button className="remove" onClick={onClick}>
+        ×
+      </button>
+      <div>
+        {new Date(date).toLocaleDateString()} - {value}
+      </div>
     </div>
-  </div>
-);
+  );
+
+  return (
+    <div className="task-list">
+      {tasks.map((t) => (
+        <Task key={t.id} {...t} onClick={() => removeTask(t.id)} />
+      ))}
+      {renderControls(props.type)}
+    </div>
+  );
+}
 
 export default TaskManager;
